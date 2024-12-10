@@ -1,13 +1,13 @@
 extern crate proc_macro;
 
 mod util;
-mod concat_strings_parser;
+mod fast_concat_parser;
 
 use proc_macro::{TokenStream};
 use proc_macro2::{Ident, Span};
 use syn::{Expr, Lit, parse_macro_input, parse_quote, Stmt, Type};
 use quote::{quote, ToTokens};
-use crate::concat_strings_parser::ConcatStringsParser;
+use crate::fast_concat_parser::FastConcatParser;
 
 // Closures are hard
 fn get_var_ident(var_decls: &[(Ident, Stmt)]) -> Ident {
@@ -25,34 +25,20 @@ fn break_combined_lit_chain(var_decls: &mut Vec<(Ident, Stmt)>, var_type: &Type,
     var_decls.push((var_ident.clone(), parse_quote!(let #var_ident: #var_type = #new_expr;)));
 }
 
-/// The most efficient way to concatenate `&str`s. It's clean too!
-/// If you only concatenate literals or constants, you will get a `&'static str` back.
+/// Concatenates string expressions.
+/// 
+/// - Passing only literals will return a const `&'static str`.
+/// - Passing
+///
+/// If you only pass in literals or constants, you will get a `&'static str` back.
 /// Otherwise, this macro will create a buffer with the optimal capacity and push every string to it.
 ///
 /// # Syntax
 ///
-/// Any amount of `&str`s separated by commas.
-/// You will get a helpful error if you entered a wrong type.
-///
-/// # Comparison with other macros
-///
-/// This is as fast or faster than all other string concatenating crates (I checked those in [hoodie/concatenation_benchmarks-rs](https://github.com/hoodie/concatenation_benchmarks-rs#additional-macro-benches)).
-///
-/// The fastest of those have problems:
-/// - `concat_string_macro` evaluates expressions twice and requires std.
-/// - `concat_strs_macro` doesn't work for certain expressions.
-/// - `string_concat_macro` is the best, but it doesn't have the last two of the optimizations below.
-///   As a nitpick, it also requires that you `use string_concat::string_concat_impl`.
-///   I know, I know. Grasping at straws, but I wanted to go over all the differences.
-///
-/// # Optimizations
-///
-/// - Each expression gets a variable and thus won't be evaluated twice at runtime.
-/// - If you pass two or more literals in a row, they will be concatenated instead of pushing them to the buffer multiple times.
-/// - If you only pass literals, this macro will act as the [`concat!`] macro and only a literal will be returned.
+/// Any amount of expressions that evaluate to a `&str` separated by commas.
 #[proc_macro]
-pub fn concat_strings(input: TokenStream) -> TokenStream {
-    let body = parse_macro_input!(input as ConcatStringsParser);
+pub fn fast_concat(input: TokenStream) -> TokenStream {
+    let body = parse_macro_input!(input as FastConcatParser);
 
     if body.args.is_empty() {
         return quote!("").into_token_stream().into();

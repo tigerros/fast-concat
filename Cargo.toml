@@ -15,6 +15,7 @@ proc-macro2 = { version = "1.0.92", default-features = false }
 concat-string = "1.0.1"
 string_concat = "0.0.1"
 criterion = { version = "0.5.1", features = ["html_reports"] }
+constcat = "0.5.1"
 
 [[bench]]
 name = "concat"

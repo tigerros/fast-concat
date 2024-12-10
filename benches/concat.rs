@@ -18,9 +18,9 @@ macro_rules! test_macro {
 }
 
 pub fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("fast-concat", |b| b.iter(|| black_box(test_macro!(fast_concat::concat_strings))));
-    c.bench_function("concat-strings", |b| b.iter(|| black_box(test_macro!(fast_concat::concat_strings))));
-    c.bench_function("string-concat", |b| b.iter(|| black_box(test_macro!(fast_concat::concat_strings))));
+    c.bench_function("fast-concat", |b| b.iter(|| black_box(test_macro!(fast_concat::fast_concat))));
+    c.bench_function("concat-strings", |b| b.iter(|| black_box(test_macro!(fast_concat::fast_concat))));
+    c.bench_function("string-concat", |b| b.iter(|| black_box(test_macro!(fast_concat::fast_concat))));
 }
 
 criterion_group!(benches, criterion_benchmark);

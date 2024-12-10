@@ -3,6 +3,7 @@
 extern crate alloc;
 use alloc::string::{String, ToString};
 use string_concat::string_concat_impl;
+use fast_concat::fast_concat;
 
 macro_rules! test_macro {
     ($macro:path) => {{
@@ -24,9 +25,12 @@ macro_rules! test_macro {
 fn concat_strings() {
     let correct_output = "constvarliteralliteral20123456789";
 
-    // enable std
+    // enable std to test this
     // assert_ne because concat-string is incorrect
     // assert_ne!(test_macro!(concat_string::concat_string), correct_output);
     assert_eq!(test_macro!(string_concat::string_concat), correct_output);
-    assert_eq!(test_macro!(fast_concat::concat_strings), correct_output);
+    assert_eq!(test_macro!(fast_concat), correct_output);
+    
+    const A: &str = "A";
+    const C: &str = constcat::concat!(A, "666");
 }
