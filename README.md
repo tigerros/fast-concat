@@ -1,0 +1,1 @@
+Ever wanted to easily and efficiently concatenate stuff other than string literals? This crate is for you!
