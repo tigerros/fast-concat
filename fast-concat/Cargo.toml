@@ -1,0 +1,17 @@
+[package]
+name = "fast-concat"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fast-concat-macro = { path = "../macro" }
+constcat = "0.5.1"
+
+[dev-dependencies]
+string_concat = "0.0.1"
+criterion = { version = "0.5.1", features = ["html_reports"] }
+constcat = "0.5.1"
+
+[[bench]]
+name = "concat"
+harness = false

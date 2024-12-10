@@ -1,8 +1,8 @@
-The fastest, no-std compatible way to concatenate `&str`s.
+The fastest, constant able (thanks to [constcat](https://github.com/rossmacarthur/constcat)), no-std compatible way to concatenate `&str`s.
 
 # Comparison with other macros
 
-This is faster than the fastest string concatenating crates (I checked those in [hoodie/concatenation_benchmarks-rs](https://github.com/hoodie/concatenation_benchmarks-rs#additional-macro-benches)).
+This is as fast or faster than the fastest string concatenating crates (I checked those in [hoodie/concatenation_benchmarks-rs](https://github.com/hoodie/concatenation_benchmarks-rs#additional-macro-benches)).
 
 Those have other problems too:
 - `concat_string_macro` evaluates expressions twice and requires std.
@@ -14,5 +14,5 @@ Those have other problems too:
 # Optimizations
 
 - Each expression gets a variable and thus won't be evaluated twice at runtime.
-- If you pass two or more literals in a row, they will be concatenated instead of pushing them to the buffer multiple times.
-- Passing only literals makes the macro act as the [`concat!`] macro and a literal will be returned.
+- If you pass multiple constants or literals in a row, they will be concatenated at compile time and pushed to the buffer only once.
+- Passing only constants or literals makes the macro act as the [`concat!`] macro and a literal will be returned.
