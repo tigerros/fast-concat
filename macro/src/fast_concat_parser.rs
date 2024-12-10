@@ -22,9 +22,10 @@ pub struct FastConcatParser {
 
 impl Parse for FastConcatParser {
     fn parse(input: ParseStream) -> syn::Result<Self> {
-
         let items = Punctuated::<Item, Token![,]>::parse_terminated(input)?;
 
-        Ok(Self { items: items.into_iter().collect() })
+        Ok(Self {
+            items: items.into_iter().collect(),
+        })
     }
 }

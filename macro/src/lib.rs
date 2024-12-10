@@ -33,11 +33,11 @@ extern crate proc_macro;
 
 mod fast_concat_parser;
 
-use proc_macro::{TokenStream};
-use proc_macro2::{Ident, Span};
-use syn::{Expr, parse_macro_input, parse_quote, Stmt};
-use quote::{quote, ToTokens};
 use crate::fast_concat_parser::FastConcatParser;
+use proc_macro::TokenStream;
+use proc_macro2::{Ident, Span};
+use quote::{quote, ToTokens};
+use syn::{parse_macro_input, parse_quote, Expr, Stmt};
 
 struct OutExpression {
     pub expr: Expr,
@@ -68,12 +68,12 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
                     let const_e = consts.pop().unwrap();
                     out_expressions.push(OutExpression {
                         is_const: true,
-                        expr: parse_quote!(#const_e)
+                        expr: parse_quote!(#const_e),
                     });
                 } else {
                     out_expressions.push(OutExpression {
                         is_const: true,
-                        expr: parse_quote!(::constcat::concat!(#(#consts,)*))
+                        expr: parse_quote!(::constcat::concat!(#(#consts,)*)),
                     });
                 }
 
@@ -82,7 +82,7 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
 
             out_expressions.push(OutExpression {
                 is_const: false,
-                expr: item.expr
+                expr: item.expr,
             });
         }
     }
@@ -90,7 +90,7 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
     if !consts.is_empty() {
         out_expressions.push(OutExpression {
             is_const: true,
-            expr: parse_quote!(::fast_concat::constcat!(#(#consts,)*))
+            expr: parse_quote!(::fast_concat::constcat!(#(#consts,)*)),
         });
     }
 
@@ -103,10 +103,12 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
             quote!({
                 const OUTPUT: &'static str = #expr;
                 OUTPUT
-            }).into_token_stream().into()
+            })
+            .into_token_stream()
+            .into()
         } else {
             quote!(#expr).into_token_stream().into()
-        }
+        };
     }
 
     let mut variable_idents = Vec::<Ident>::new();
@@ -131,5 +133,7 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
         let mut buf = alloc::string::String::with_capacity(0 #(+ #variable_idents.len())*);
         #(buf.push_str(#variable_idents);)*
         buf
-    }).into_token_stream().into()
+    })
+    .into_token_stream()
+    .into()
 }

@@ -30,6 +30,7 @@
     clippy::print_stdout,
     clippy::print_stderr
 )]
+pub use constcat::concat as constcat;
 /// Concatenates string expressions.
 ///
 /// If you only pass in literals or constants, you will get a const `&'static str` back.
@@ -99,21 +100,20 @@
 /// });
 /// ```
 pub use fast_concat_macro::fast_concat;
-pub use constcat::concat as constcat;
 
 #[cfg(test)]
 mod tests {
     extern crate alloc;
     use alloc::string::{String, ToString};
-    use string_concat::string_concat_impl;
     use fast_concat_macro::fast_concat;
+    use string_concat::string_concat_impl;
 
     #[test]
     fn concat() {
         const CONST: &str = "const ";
         let var = "var ";
         let mut buf = String::new();
-        
+
         macro_rules! impure_expr {
             ($buf:ident) => {{
                 for i in 0..10 {
@@ -122,10 +122,24 @@ mod tests {
                 &$buf
             }};
         }
-        
+
         let correct_output = "lit0 const var lit1 lit2 90123456789";
 
-        assert_eq!(string_concat::string_concat!("lit0 ", CONST, var, "lit1 ", "lit2 ", "9", impure_expr!(buf)), correct_output);
-        assert_eq!(fast_concat!("lit0 ", const CONST, var, "lit1 ", "lit2 ", 9, impure_expr!(buf)), correct_output);
+        assert_eq!(
+            string_concat::string_concat!(
+                "lit0 ",
+                CONST,
+                var,
+                "lit1 ",
+                "lit2 ",
+                "9",
+                impure_expr!(buf)
+            ),
+            correct_output
+        );
+        assert_eq!(
+            fast_concat!("lit0 ", const CONST, var, "lit1 ", "lit2 ", 9, impure_expr!(buf)),
+            correct_output
+        );
     }
 }

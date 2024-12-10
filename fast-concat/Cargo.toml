@@ -1,7 +1,14 @@
 [package]
 name = "fast-concat"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
+authors = ["Leonard D."]
+description = "Fastest macro for concatenating strings."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tigerros/fast-concat"
+categories = ["no-std", "rust-patterns"]
+keywords = ["concat", "string"]
+include = ["fast-concat", "macro", "README.md"]
 
 [dependencies]
 fast-concat-macro = { path = "../macro" }
