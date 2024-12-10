@@ -8,7 +8,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/tigerros/fast-concat"
 categories = ["no-std", "rust-patterns"]
 keywords = ["concat", "string"]
-include = ["fast-concat", "macro", "README.md"]
+include = ["src"]
 
 [dependencies]
 fast-concat-macro = { path = "../macro" }
