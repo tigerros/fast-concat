@@ -11,7 +11,7 @@ keywords = ["concat", "string"]
 include = ["src"]
 
 [dependencies]
-fast-concat-macro = { path = "../macro" }
+fast-concat-macro = "1.0.0"
 constcat = "0.5.1"
 
 [dev-dependencies]
