@@ -1,6 +1,7 @@
-extern crate alloc;
+#![no_std]
 
-use std::ffi::OsStr;
+extern crate alloc;
+use alloc::string::{String, ToString};
 use string_concat::string_concat_impl;
 
 macro_rules! test_macro {
@@ -22,11 +23,10 @@ macro_rules! test_macro {
 #[test]
 fn concat_strings() {
     let correct_output = "constvarliteralliteral20123456789";
-    
-    assert_eq!(test_macro!(concat_string::concat_string), correct_output);
-    assert_eq!(test_macro!(string_concat::string_concat), correct_output);
-    assert_eq!(test_macro!(concat_x::concat_strings), correct_output);
 
-    concat_x::concat_strings!(strict: "aa");
-    concat_x::concat_paths!(OsStr::new("aaf"));
+    // enable std
+    // assert_ne because concat-string is incorrect
+    // assert_ne!(test_macro!(concat_string::concat_string), correct_output);
+    assert_eq!(test_macro!(string_concat::string_concat), correct_output);
+    assert_eq!(test_macro!(fast_concat::concat_strings), correct_output);
 }

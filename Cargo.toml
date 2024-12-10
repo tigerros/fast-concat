@@ -1,5 +1,5 @@
 [package]
-name = "concat-x"
+name = "fast-concat"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,11 +7,15 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
-syn = { version = "2.0.39", features = ["full"] }
-quote = "1.0.33"
-proc-macro2 = "1.0.69"
+syn = { version = "2.0.90", default-features = false, features = ["full"] }
+quote = {  version = "1.0.37", default-features = false }
+proc-macro2 = { version = "1.0.92", default-features = false }
 
 [dev-dependencies]
 concat-string = "1.0.1"
 string_concat = "0.0.1"
 criterion = { version = "0.5.1", features = ["html_reports"] }
+
+[[bench]]
+name = "concat"
+harness = false
