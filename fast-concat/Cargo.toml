@@ -11,7 +11,7 @@ keywords = ["concat", "string"]
 include = ["src", "README.md"]
 
 [dependencies]
-fast-concat-macro = { path = "../fast-concat-macro" }
+fast-concat-macro = "1.0.2"
 
 [dev-dependencies]
 string_concat = "0.0.1"
