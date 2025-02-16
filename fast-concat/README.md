@@ -1,4 +1,5 @@
 The fastest, constant able (thanks to [constcat](https://github.com/rossmacarthur/constcat)), no-std compatible way to concatenate `&str`s.
+Due to how macros work, you need to import constcat as a separate dependency.
 
 # Comparison with other macros
 
@@ -15,4 +16,4 @@ Those have other problems too:
 
 - Each expression gets a variable and thus won't be evaluated twice at runtime.
 - If you pass multiple constants or literals in a row, they will be concatenated at compile time and pushed to the buffer only once.
-- Passing only constants or literals makes the macro act as the [`concat!`] macro and a literal will be returned.
+- Passing only constants or literals makes the macro act as the [`concat!`] macro, and a literal will be returned.

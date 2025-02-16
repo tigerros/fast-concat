@@ -30,7 +30,7 @@
     clippy::print_stdout,
     clippy::print_stderr
 )]
-pub use constcat::concat as constcat;
+
 /// Concatenates string expressions.
 ///
 /// If you only pass in literals or constants, you will get a const `&'static str` back.
@@ -95,7 +95,7 @@ pub use constcat::concat as constcat;
 ///
 /// assert_eq!(ICON, "./assets/icon.png");
 /// assert_eq!(ICON, {
-///     const OUTPUT: &'static str = ::fast_concat::constcat!(ASSETS_DIR, '/', "icon.png" , );
+///     const OUTPUT: &'static str = ::constcat::concat!(ASSETS_DIR, '/', "icon.png" , );
 ///     OUTPUT
 /// });
 /// ```

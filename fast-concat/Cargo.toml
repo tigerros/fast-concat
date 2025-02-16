@@ -1,6 +1,6 @@
 [package]
 name = "fast-concat"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2021"
 authors = ["Leonard D."]
 description = "Fastest macro for concatenating strings."
@@ -11,13 +11,12 @@ keywords = ["concat", "string"]
 include = ["src", "README.md"]
 
 [dependencies]
-fast-concat-macro = "1.0.0"
-constcat = "0.5.1"
+fast-concat-macro = { path = "../fast-concat-macro" }
 
 [dev-dependencies]
 string_concat = "0.0.1"
 criterion = { version = "0.5.1", features = ["html_reports"] }
-constcat = "0.5.1"
+constcat = "0.6.0"
 
 [[bench]]
 name = "concat"
