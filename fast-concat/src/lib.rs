@@ -106,7 +106,6 @@ mod tests {
     extern crate alloc;
     use alloc::string::{String, ToString};
     use fast_concat_macro::fast_concat;
-    use string_concat::string_concat_impl;
 
     #[test]
     fn concat() {
@@ -126,17 +125,12 @@ mod tests {
         let correct_output = "lit0 const var lit1 lit2 90123456789";
 
         assert_eq!(
-            string_concat::string_concat!(
-                "lit0 ",
-                CONST,
-                var,
-                "lit1 ",
-                "lit2 ",
-                "9",
-                impure_expr!(buf)
-            ),
+            fast_concat!("lit0 ", const CONST, var, "lit1 ", "lit2 ", 9, impure_expr!(buf)),
             correct_output
         );
+
+        let correct_output = "lit0 const var lit1 lit2 901234567890123456789";
+
         assert_eq!(
             fast_concat!("lit0 ", const CONST, var, "lit1 ", "lit2 ", 9, impure_expr!(buf)),
             correct_output

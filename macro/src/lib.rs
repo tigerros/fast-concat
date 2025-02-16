@@ -73,7 +73,7 @@ pub fn fast_concat(input: TokenStream) -> TokenStream {
                 } else {
                     out_expressions.push(OutExpression {
                         is_const: true,
-                        expr: parse_quote!(::constcat::concat!(#(#consts,)*)),
+                        expr: parse_quote!(::fast_concat::constcat!(#(#consts,)*)),
                     });
                 }
 
