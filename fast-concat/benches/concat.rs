@@ -1,8 +1,8 @@
-#![no_std]
 extern crate alloc;
 use alloc::string::{String, ToString};
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use fast_concat_macro::fast_concat;
+use std::hint::black_box;
 use string_concat::string_concat_impl;
 
 pub fn criterion_benchmark(c: &mut Criterion) {

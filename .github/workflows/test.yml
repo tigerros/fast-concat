@@ -1,0 +1,18 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-hack
+
+      - name: Test
+        run: cargo hack test --feature-powerset --all-targets -q
+
+      - name: Doctest
+        run: cargo hack test --feature-powerset --doc -q

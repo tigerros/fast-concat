@@ -8,15 +8,16 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/tigerros/fast-concat"
 categories = ["no-std", "rust-patterns"]
 keywords = ["concat", "string"]
-include = ["src", "README.md"]
+include = ["src", "../README.md"]
+readme = "../README.md"
 
 [dependencies]
 fast-concat-macro = "1.0.2"
 
 [dev-dependencies]
+constcat = "0.6.1"
+criterion = { version = "0.6.0", features = ["html_reports"] }
 string_concat = "0.0.1"
-criterion = { version = "0.5.1", features = ["html_reports"] }
-constcat = "0.6.0"
 
 [[bench]]
 name = "concat"

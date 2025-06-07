@@ -1,0 +1,26 @@
+name: Check
+on: [push, pull_request]
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        toolchain:
+          - "stable"
+          - "nightly"
+        include:
+          - toolchain: "nightly"
+            flags: "-Z direct-minimal-versions"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/install-action@cargo-hack
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          targets: x86_64-unknown-none
+
+      - name: Check
+        run: rustup run ${{ matrix.toolchain }} cargo hack check --feature-powerset --workspace --all-targets ${{ matrix.flags }}
