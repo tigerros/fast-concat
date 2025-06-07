@@ -3,7 +3,6 @@ on: [push, pull_request]
 
 jobs:
   format:
-    strategy:
     runs-on: ubuntu-latest
 
     steps:
